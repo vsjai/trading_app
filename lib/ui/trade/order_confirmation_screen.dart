@@ -19,11 +19,37 @@ class OrderConfirmationScreen extends StatelessWidget {
     required int remainingBalancePaise,
   }) {
     return Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => OrderConfirmationScreen(
-          order: order,
-          remainingBalancePaise: remainingBalancePaise,
-        ),
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 350),
+        reverseTransitionDuration: const Duration(milliseconds: 280),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            OrderConfirmationScreen(
+              order: order,
+              remainingBalancePaise: remainingBalancePaise,
+            ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final slideAnimation =
+              Tween<Offset>(
+                begin: const Offset(0.0, 1.0),
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOutCubic,
+                  reverseCurve: Curves.easeInCubic,
+                ),
+              );
+
+          final fadeAnimation = Tween<double>(
+            begin: 0.0,
+            end: 1.0,
+          ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut));
+
+          return SlideTransition(
+            position: slideAnimation,
+            child: FadeTransition(opacity: fadeAnimation, child: child),
+          );
+        },
       ),
     );
   }
@@ -39,11 +65,7 @@ class OrderConfirmationScreen extends StatelessWidget {
         backgroundColor: AppTheme.background,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded, color: AppTheme.textPrimary),
-          tooltip: 'Back',
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        automaticallyImplyLeading: false,
         title: Text(
           'Order Status',
           style: TextStyle(

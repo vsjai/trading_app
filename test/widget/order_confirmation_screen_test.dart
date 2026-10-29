@@ -126,7 +126,7 @@ void main() {
     expect(find.text('Show Receipt'), findsOneWidget);
   });
 
-  testWidgets('Dismisses screen on tapping top Back button', (tester) async {
+  testWidgets('Dismisses screen on system back navigation', (tester) async {
     await tester.pumpWidget(createSubject(sampleBuyOrder, 50000000));
     await tester.pumpAndSettle();
 
@@ -135,9 +135,7 @@ void main() {
 
     expect(find.text('Order Completed'), findsOneWidget);
 
-    final backBtn = find.byTooltip('Back');
-    expect(backBtn, findsOneWidget);
-    await tester.tap(backBtn);
+    await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
 
     expect(find.text('Order Completed'), findsNothing);
