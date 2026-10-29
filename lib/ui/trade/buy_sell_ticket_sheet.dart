@@ -6,7 +6,7 @@ import '../../core/theme/app_theme.dart';
 import '../../models/order.dart';
 import '../../state/market_providers.dart';
 import '../../state/portfolio_providers.dart';
-import 'order_confirmation_dialog.dart';
+import 'order_confirmation_screen.dart';
 
 class BuySellTicketSheet extends ConsumerStatefulWidget {
   final String symbol;
@@ -488,7 +488,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                           if (result.isSuccess && result.order != null) {
                             final updatedWallet = ref.read(walletProvider);
                             nav.pop();
-                            OrderConfirmationDialog.show(
+                            OrderConfirmationScreen.show(
                               nav.context,
                               order: result.order!,
                               remainingBalancePaise: updatedWallet,

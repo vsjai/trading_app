@@ -147,9 +147,9 @@ void main() {
     // Confirmation dialog appears
     expect(find.text('Order Completed'), findsOneWidget);
     expect(find.text('Instrument'), findsOneWidget);
-    expect(find.text('Done'), findsOneWidget);
+    expect(find.text('Okay'), findsOneWidget);
 
-    await tester.tap(find.text('Done'));
+    await tester.tap(find.text('Okay'));
     await tester.pumpAndSettle();
 
     expect(find.text('Order Completed'), findsNothing);
