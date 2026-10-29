@@ -4,6 +4,8 @@ import 'core/theme/app_theme.dart';
 import 'services/storage_service.dart';
 import 'state/storage_providers.dart';
 
+import 'ui/market/market_overview_screen.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -27,14 +29,7 @@ class TradingApp extends StatelessWidget {
       title: 'Trading App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'Trading App — Initializing Market Data...',
-            style: TextStyle(color: AppTheme.textPrimary, fontSize: 16),
-          ),
-        ),
-      ),
+      home: const MarketOverviewScreen(),
     );
   }
 }

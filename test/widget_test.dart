@@ -17,6 +17,6 @@ void main() {
       ),
     );
 
-    expect(find.textContaining('Trading App'), findsOneWidget);
+    expect(find.text('Live Market'), findsOneWidget);
   });
 }
