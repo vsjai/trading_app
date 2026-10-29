@@ -39,10 +39,34 @@ void main() {
     );
   }
 
-  testWidgets('WatchlistsScreen renders active watchlist tabs and stock rows', (
+  final sampleWatchlists = [
+    const Watchlist(
+      id: 'wl_1',
+      name: 'Nifty Top 10',
+      symbols: ['RELIANCE', 'TCS'],
+    ),
+    const Watchlist(
+      id: 'wl_2',
+      name: 'Banking & Infra',
+      symbols: ['SBIN', 'LT'],
+    ),
+  ];
+
+  testWidgets('Empty state is shown when no watchlists are created', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(createSubject());
+    await tester.pumpAndSettle();
+
+    expect(find.text('Watchlists'), findsOneWidget);
+    expect(find.text('No Watchlists Created'), findsOneWidget);
+    expect(find.text('Create Watchlist'), findsOneWidget);
+  });
+
+  testWidgets('WatchlistsScreen renders active watchlist tabs and stock rows', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(createSubject(initialWatchlists: sampleWatchlists));
     await tester.pumpAndSettle();
 
     expect(find.text('Watchlists'), findsOneWidget);
@@ -55,10 +79,9 @@ void main() {
   testWidgets('Switching tabs displays stocks for selected watchlist', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(createSubject());
+    await tester.pumpWidget(createSubject(initialWatchlists: sampleWatchlists));
     await tester.pumpAndSettle();
 
-    // Tap on 'Banking & Infra' tab
     await tester.tap(find.text('Banking & Infra'));
     await tester.pumpAndSettle();
 
@@ -83,7 +106,7 @@ void main() {
   testWidgets('Removing a stock removes it from screen immediately', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(createSubject());
+    await tester.pumpWidget(createSubject(initialWatchlists: sampleWatchlists));
     await tester.pumpAndSettle();
 
     expect(find.text('RELIANCE'), findsOneWidget);
@@ -98,7 +121,9 @@ void main() {
   testWidgets(
     'Tapping a stock row opens BuySellTicketSheet with pre-selected symbol',
     (WidgetTester tester) async {
-      await tester.pumpWidget(createSubject());
+      await tester.pumpWidget(
+        createSubject(initialWatchlists: sampleWatchlists),
+      );
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('TCS'));
@@ -128,12 +153,10 @@ void main() {
     expect(find.text('Add Instruments'), findsOneWidget);
     expect(find.text('RELIANCE'), findsOneWidget);
 
-    // Tap add on RELIANCE
     final addIcon = find.byIcon(Icons.add_circle_outline).first;
     await tester.tap(addIcon);
     await tester.pumpAndSettle();
 
-    // Close sheet
     await tester.tap(find.byIcon(Icons.close));
     await tester.pumpAndSettle();
 
@@ -143,7 +166,9 @@ void main() {
   testWidgets(
     'Creating a new watchlist switches to it and adding stocks maintains current tab',
     (WidgetTester tester) async {
-      await tester.pumpWidget(createSubject());
+      await tester.pumpWidget(
+        createSubject(initialWatchlists: sampleWatchlists),
+      );
       await tester.pumpAndSettle();
 
       await tester.tap(find.byIcon(Icons.add).first);
@@ -173,4 +198,49 @@ void main() {
       expect(find.text('Watchlist is Empty'), findsNothing);
     },
   );
+
+  testWidgets('User can delete any and all watchlists down to zero', (
+    WidgetTester tester,
+  ) async {
+    final singleWatchlist = [
+      const Watchlist(id: 'w_only', name: 'Sole Watchlist', symbols: ['TCS']),
+    ];
+
+    await tester.pumpWidget(createSubject(initialWatchlists: singleWatchlist));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sole Watchlist'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Delete Watchlist'), findsOneWidget);
+    await tester.tap(find.text('Delete Watchlist'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Delete'), findsOneWidget);
+    await tester.tap(find.text('Delete'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('No Watchlists Created'), findsOneWidget);
+  });
+
+  testWidgets('Creating a watchlist from empty state works properly', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(createSubject());
+    await tester.pumpAndSettle();
+
+    expect(find.text('No Watchlists Created'), findsOneWidget);
+    await tester.tap(find.text('Create Watchlist'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('New Watchlist'), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'Tech Leaders');
+    await tester.tap(find.text('Create'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tech Leaders'), findsOneWidget);
+    expect(find.text('Watchlist is Empty'), findsOneWidget);
+  });
 }

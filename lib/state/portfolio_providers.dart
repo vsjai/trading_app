@@ -40,6 +40,11 @@ class HoldingsNotifier extends StateNotifier<List<Holding>> {
     state = holdings;
     await _storageService.saveHoldings(holdings);
   }
+
+  Future<void> clearHoldings() async {
+    state = const [];
+    await _storageService.saveHoldings(const []);
+  }
 }
 
 final holdingsProvider = StateNotifierProvider<HoldingsNotifier, List<Holding>>(

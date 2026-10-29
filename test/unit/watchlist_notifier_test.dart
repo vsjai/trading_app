@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trading_app/core/constants/app_constants.dart';
 import 'package:trading_app/models/watchlist.dart';
 import 'package:trading_app/services/storage_service.dart';
 import 'package:trading_app/state/watchlist_providers.dart';
@@ -14,12 +13,9 @@ void main() {
       notifier = WatchlistNotifier(storage);
     });
 
-    test('initializes with default watchlists if storage is empty', () {
-      expect(notifier.state.length, 2);
-      expect(notifier.state[0].id, AppConstants.defaultWatchlistId);
-      expect(notifier.state[0].name, AppConstants.defaultWatchlistName);
-      expect(notifier.state[0].symbols, AppConstants.defaultWatchlistSymbols);
-      expect(storage.loadWatchlists()?.length, 2);
+    test('initializes with empty watchlists if storage is empty', () {
+      expect(notifier.state, isEmpty);
+      expect(storage.loadWatchlists()?.isEmpty, isTrue);
     });
 
     test('restores watchlists from storage if available', () {
@@ -39,40 +35,44 @@ void main() {
     });
 
     test('creates new watchlist and persists it', () async {
-      await notifier.createWatchlist('Bluechips');
+      final id = await notifier.createWatchlist('Bluechips');
 
-      expect(notifier.state.length, 3);
-      expect(notifier.state.last.name, 'Bluechips');
-      expect(notifier.state.last.symbols, isEmpty);
+      expect(notifier.state.length, 1);
+      expect(notifier.state.first.id, id);
+      expect(notifier.state.first.name, 'Bluechips');
+      expect(notifier.state.first.symbols, isEmpty);
 
       final persisted = storage.loadWatchlists()!;
-      expect(persisted.length, 3);
-      expect(persisted.last.name, 'Bluechips');
+      expect(persisted.length, 1);
+      expect(persisted.first.name, 'Bluechips');
     });
 
     test('renames existing watchlist and persists it', () async {
-      final initialId = notifier.state.first.id;
-      await notifier.renameWatchlist(initialId, 'Nifty Prime');
+      final id = await notifier.createWatchlist('Initial Name');
+      await notifier.renameWatchlist(id, 'Nifty Prime');
 
       expect(notifier.state.first.name, 'Nifty Prime');
       expect(storage.loadWatchlists()!.first.name, 'Nifty Prime');
     });
 
-    test('deletes watchlist while preserving at least one watchlist', () async {
-      final firstId = notifier.state.first.id;
-      final secondId = notifier.state[1].id;
+    test(
+      'deletes any watchlist including the last one down to empty',
+      () async {
+        final firstId = await notifier.createWatchlist('List 1');
+        final secondId = await notifier.createWatchlist('List 2');
 
-      await notifier.deleteWatchlist(firstId);
-      expect(notifier.state.length, 1);
-      expect(notifier.state.first.id, secondId);
+        await notifier.deleteWatchlist(firstId);
+        expect(notifier.state.length, 1);
+        expect(notifier.state.first.id, secondId);
 
-      // Attempt to delete last watchlist should be blocked
-      await notifier.deleteWatchlist(secondId);
-      expect(notifier.state.length, 1);
-    });
+        await notifier.deleteWatchlist(secondId);
+        expect(notifier.state, isEmpty);
+        expect(storage.loadWatchlists(), isEmpty);
+      },
+    );
 
     test('adds stock to watchlist without duplicate symbols', () async {
-      final targetId = notifier.state.first.id;
+      final targetId = await notifier.createWatchlist('My Watchlist');
 
       await notifier.addStockToWatchlist(targetId, 'ITC');
       expect(notifier.state.first.symbols.contains('ITC'), isTrue);
@@ -85,9 +85,12 @@ void main() {
     test(
       'removing stock from one watchlist preserves it in other watchlists',
       () async {
-        final w1Id = notifier.state[0].id;
+        final w1Id = await notifier.createWatchlist('List 1');
+        final w2Id = await notifier.createWatchlist('List 2');
 
-        // Both defaults contain 'HDFCBANK'
+        await notifier.addStockToWatchlist(w1Id, 'HDFCBANK');
+        await notifier.addStockToWatchlist(w2Id, 'HDFCBANK');
+
         expect(notifier.state[0].symbols.contains('HDFCBANK'), isTrue);
         expect(notifier.state[1].symbols.contains('HDFCBANK'), isTrue);
 
@@ -103,16 +106,18 @@ void main() {
     );
 
     test('reorders stocks accurately and persists order', () async {
-      final targetId = notifier.state.first.id;
-      final original = List<String>.from(notifier.state.first.symbols);
-      final firstSymbol = original.first;
+      final targetId = await notifier.createWatchlist('Reorder Test');
+      await notifier.addStockToWatchlist(targetId, 'RELIANCE');
+      await notifier.addStockToWatchlist(targetId, 'TCS');
+      await notifier.addStockToWatchlist(targetId, 'INFY');
 
-      // Move first item to position 2
+      expect(notifier.state.first.symbols, ['RELIANCE', 'TCS', 'INFY']);
+
       await notifier.reorderStocks(targetId, 0, 3);
 
       final updated = notifier.state.first.symbols;
-      expect(updated[2], firstSymbol);
-      expect(storage.loadWatchlists()!.first.symbols[2], firstSymbol);
+      expect(updated[2], 'RELIANCE');
+      expect(storage.loadWatchlists()!.first.symbols[2], 'RELIANCE');
     });
   });
 }

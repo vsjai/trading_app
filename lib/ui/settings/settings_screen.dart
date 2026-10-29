@@ -233,6 +233,81 @@ class SettingsScreen extends ConsumerWidget {
                     minimumSize: const Size.fromHeight(42),
                   ),
                 ),
+                const SizedBox(height: 10),
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    final confirmed = await showDialog<bool>(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        backgroundColor: AppTheme.surfaceCard,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: BorderSide(color: AppTheme.border),
+                        ),
+                        title: Text(
+                          'Clear Positions & Holdings?',
+                          style: TextStyle(
+                            color: AppTheme.textPrimary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        content: Text(
+                          'This will remove all open positions and holdings from your portfolio. This action cannot be undone.',
+                          style: TextStyle(
+                            color: AppTheme.textSecondary,
+                            fontSize: 14,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(false),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(color: AppTheme.textSecondary),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(true),
+                            child: const Text(
+                              'Clear All',
+                              style: TextStyle(
+                                color: AppTheme.bearRed,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirmed == true) {
+                      await ref.read(holdingsProvider.notifier).clearHoldings();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'All positions and holdings cleared successfully.',
+                            ),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  icon: const Icon(Icons.delete_sweep_rounded, size: 16),
+                  label: const Text('Clear Positions & Holdings'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppTheme.bearRed,
+                    side: BorderSide(
+                      color: AppTheme.bearRed.withValues(alpha: 0.5),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    minimumSize: const Size.fromHeight(42),
+                  ),
+                ),
               ],
             ),
           ),

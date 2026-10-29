@@ -13,29 +13,20 @@ class WatchlistNotifier extends StateNotifier<List<Watchlist>> {
 
   void _loadInitialWatchlists() {
     final persisted = _storageService.loadWatchlists();
-    if (persisted != null && persisted.isNotEmpty) {
+    if (persisted != null) {
       state = persisted;
     } else {
-      final defaults = [
-        const Watchlist(
-          id: AppConstants.defaultWatchlistId,
-          name: AppConstants.defaultWatchlistName,
-          symbols: AppConstants.defaultWatchlistSymbols,
-        ),
-        const Watchlist(
-          id: AppConstants.secondaryWatchlistId,
-          name: AppConstants.secondaryWatchlistName,
-          symbols: AppConstants.secondaryWatchlistSymbols,
-        ),
-      ];
-      state = defaults;
-      _storageService.saveWatchlists(defaults);
+      state = const [];
+      _storageService.saveWatchlists(const []);
     }
   }
 
+  int _idCounter = 0;
+
   Future<String> createWatchlist(String name) async {
     final trimmed = name.trim();
-    final newId = 'wl_${DateTime.now().millisecondsSinceEpoch}';
+    final newId =
+        'wl_${DateTime.now().microsecondsSinceEpoch}_${++_idCounter}';
     if (trimmed.isEmpty) return newId;
 
     final newWatchlist = Watchlist(id: newId, name: trimmed, symbols: const []);
@@ -60,8 +51,6 @@ class WatchlistNotifier extends StateNotifier<List<Watchlist>> {
   }
 
   Future<void> deleteWatchlist(String id) async {
-    if (state.length <= 1) return;
-
     final updated = state.where((w) => w.id != id).toList();
     state = updated;
     await _storageService.saveWatchlists(updated);
@@ -136,8 +125,8 @@ final watchlistsProvider =
       return WatchlistNotifier(storage);
     });
 
-final activeWatchlistIdProvider = StateProvider<String>((ref) {
-  return AppConstants.defaultWatchlistId;
+final activeWatchlistIdProvider = StateProvider<String?>((ref) {
+  return null;
 });
 
 final activeWatchlistProvider = Provider<Watchlist?>((ref) {

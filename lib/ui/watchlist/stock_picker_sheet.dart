@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_theme.dart';
+import '../../models/watchlist.dart';
 import '../../state/market_providers.dart';
 import '../../state/watchlist_providers.dart';
 
@@ -41,7 +42,9 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
     final watchlists = ref.watch(watchlistsProvider);
     final currentWatchlist = watchlists.firstWhere(
       (w) => w.id == widget.watchlistId,
-      orElse: () => watchlists.first,
+      orElse: () => watchlists.isNotEmpty
+          ? watchlists.first
+          : const Watchlist(id: '', name: '', symbols: []),
     );
     final existingSymbols = currentWatchlist.symbols.toSet();
 

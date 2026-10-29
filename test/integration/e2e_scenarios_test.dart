@@ -218,10 +218,12 @@ void main() {
         );
 
         final notifier1 = container1.read(watchlistsProvider.notifier);
-        final defaultWl = container1.read(watchlistsProvider).first;
-        final targetSymbol = defaultWl.symbols.first;
+        final wlId = await notifier1.createWatchlist('Restart Test');
+        await notifier1.addStockToWatchlist(wlId, 'RELIANCE');
+        await notifier1.addStockToWatchlist(wlId, 'TCS');
+        const targetSymbol = 'RELIANCE';
 
-        await notifier1.removeStockFromWatchlist(defaultWl.id, targetSymbol);
+        await notifier1.removeStockFromWatchlist(wlId, targetSymbol);
         expect(
           container1
               .read(watchlistsProvider)
@@ -241,6 +243,7 @@ void main() {
 
         final restoredWl = container2.read(watchlistsProvider).first;
         expect(restoredWl.symbols.contains(targetSymbol), isFalse);
+        expect(restoredWl.symbols.contains('TCS'), isTrue);
         container2.dispose();
       },
     );

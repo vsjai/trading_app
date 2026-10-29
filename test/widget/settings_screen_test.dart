@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:trading_app/core/constants/app_constants.dart';
+import 'package:trading_app/models/holding.dart';
 import 'package:trading_app/services/market_feed_service.dart';
 import 'package:trading_app/services/storage_service.dart';
 import 'package:trading_app/state/market_providers.dart';
+import 'package:trading_app/state/portfolio_providers.dart';
 import 'package:trading_app/state/storage_providers.dart';
 import 'package:trading_app/ui/settings/settings_screen.dart';
 
@@ -18,12 +20,16 @@ void main() {
   Widget buildTestableSettings({
     ThemeMode initialTheme = ThemeMode.dark,
     int initialWallet = AppConstants.defaultWalletBalancePaise,
+    List<Holding>? initialHoldings,
   }) {
     if (initialTheme == ThemeMode.light) {
       inMemoryStorage.saveThemeMode('light');
     }
     if (initialWallet != AppConstants.defaultWalletBalancePaise) {
       inMemoryStorage.saveWalletBalance(initialWallet);
+    }
+    if (initialHoldings != null) {
+      inMemoryStorage.saveHoldings(initialHoldings);
     }
 
     return ProviderScope(
@@ -58,6 +64,7 @@ void main() {
     expect(find.text('PAPER TRADING ACCOUNT'), findsOneWidget);
     expect(find.text('Available Cash Balance'), findsOneWidget);
     expect(find.text('Reset Balance to ₹5,00,000.00'), findsOneWidget);
+    expect(find.text('Clear Positions & Holdings'), findsOneWidget);
 
     expect(find.text('APPLICATION & DATA'), findsOneWidget);
     expect(find.text('Active Watchlists'), findsOneWidget);
@@ -144,4 +151,73 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Canceling Clear Positions & Holdings leaves holdings intact', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    const holding = Holding(
+      symbol: 'RELIANCE',
+      quantity: 10,
+      totalCostPaise: 2950500,
+    );
+    await tester.pumpWidget(buildTestableSettings(initialHoldings: [holding]));
+    await tester.pumpAndSettle();
+
+    final clearBtn = find.text('Clear Positions & Holdings');
+    expect(clearBtn, findsOneWidget);
+
+    await tester.tap(clearBtn);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Clear Positions & Holdings?'), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(SettingsScreen)),
+    );
+    expect(container.read(holdingsProvider).length, 1);
+  });
+
+  testWidgets(
+    'Confirming Clear Positions & Holdings clears holdings and shows snackbar',
+    (tester) async {
+      tester.view.physicalSize = const Size(800, 2000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      const holding = Holding(
+        symbol: 'TCS',
+        quantity: 5,
+        totalCostPaise: 1922500,
+      );
+      await tester.pumpWidget(
+        buildTestableSettings(initialHoldings: [holding]),
+      );
+      await tester.pumpAndSettle();
+
+      final clearBtn = find.text('Clear Positions & Holdings');
+      await tester.tap(clearBtn);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Clear Positions & Holdings?'), findsOneWidget);
+      await tester.tap(find.text('Clear All'));
+      await tester.pumpAndSettle();
+
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(SettingsScreen)),
+      );
+      expect(container.read(holdingsProvider), isEmpty);
+      expect(
+        find.text('All positions and holdings cleared successfully.'),
+        findsOneWidget,
+      );
+    },
+  );
 }

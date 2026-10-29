@@ -9,7 +9,8 @@ Zero backend setup or API keys required — runs completely standalone out of th
 ## Features
 
 ### 1. Multi-Watchlist Management
-- **Multiple Watchlists**: Create custom watchlists, rename them, and delete existing ones while preserving at least one active list.
+- **User-Created Watchlists**: Starts with a clean state (zero pre-seeded watchlists); users create and customize watchlists from scratch.
+- **Unconstrained Watchlist Deletion**: Users can delete any watchlist, including down to zero, with a modern, informative empty state.
 - **Stock Picker**: Add any of the 10 canonical stocks (`RELIANCE`, `TCS`, `INFY`, `HDFCBANK`, `ICICIBANK`, `SBIN`, `ITC`, `LT`, `BHARTIARTL`, `AXISBANK`).
 - **Drag-to-Reorder**: Reorder stocks seamlessly within any watchlist using `ReorderableListView` backed by stable keys.
 - **Stock Removal**: Delete stocks with immediate UI update and persistence.
@@ -53,6 +54,7 @@ Zero backend setup or API keys required — runs completely standalone out of th
 - **Light & Dark Theme Engine**: Instant, app-wide switching between sleek Dark Mode and clean, contrast-optimized Light Mode, persisted locally.
 - **Feed Simulation Controls**: Direct toggle between Normal (~2 ticks/s), Active (~10 ticks/s), and Stress (~55+ ticks/s) tick frequencies.
 - **Paper Trading Balance Reset**: One-tap reset back to the default ₹5,00,000.00 cash balance.
+- **Clear Positions & Holdings**: Dedicated button with confirmation safety to instantly wipe simulated holdings and open positions.
 - **Diagnostics & App Stats**: Displays live metrics for active watchlists, open positions count, orders executed, and canonical stock count.
 
 ---
@@ -147,9 +149,9 @@ dart format --output=none --set-exit-if-changed lib test
 ```
 
 ### Verified Test Results
-- **102 of 102 tests passing (100% pass rate)**:
+- **107 of 107 tests passing (100% pass rate)**:
   - `test/unit/` (48 tests): Domain serialization, currency formatting without drift, weighted average cost, storage adapters, watchlist reordering, market feed distribution, theme mode persistence.
-  - `test/widget/` (38 tests): Market overview rendering, price flashes, watchlist tabs, stock picker modal, buy/sell ticket validations, order confirmation receipts and dismiss actions (Okay, Back, Cancel), portfolio summary card, smooth scrolling, settings screen controls (theme toggle, tick modes, balance reset), bottom navigation bar theme reactivity.
+  - `test/widget/` (43 tests): Market overview rendering, price flashes, watchlist tabs, stock picker modal, buy/sell ticket validations, order confirmation screen with slide transition, portfolio summary card, smooth scrolling, settings screen controls (theme toggle, tick modes, balance reset, clear positions & holdings confirmation), empty watchlist state and creation.
   - `test/integration/` (16 tests): Cold restart restoration, cross-watchlist price parity, live price continuity across tab navigation, margin validation, 55+ ticks/sec stress benchmark, and granular stream rebuild isolation.
 - **Static Analysis**: 0 warnings, 0 errors (`flutter analyze`).
 - **Code Cleanliness**: 0 comments in `lib/` in adherence to user directives.
