@@ -62,3 +62,8 @@ final stockQuoteProvider = StreamProvider.family<StockQuote, String>((
 
   yield* feed.streamForSymbol(symbol);
 });
+
+final marketTickStreamProvider = StreamProvider<StockQuote>((ref) {
+  final feed = ref.watch(marketFeedServiceProvider);
+  return feed.quoteStream;
+});

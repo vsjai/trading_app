@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
+import '../holdings/holdings_screen.dart';
 import '../market/market_overview_screen.dart';
 import '../watchlist/watchlists_screen.dart';
 
@@ -13,9 +14,10 @@ class MainNavigationScaffold extends StatefulWidget {
 class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = const [
-    WatchlistsScreen(),
-    MarketOverviewScreen(),
+  late final List<Widget> _screens = [
+    const WatchlistsScreen(),
+    HoldingsScreen(onExploreTap: () => setState(() => _currentIndex = 0)),
+    const MarketOverviewScreen(),
   ];
 
   @override
@@ -51,6 +53,14 @@ class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
                 color: AppTheme.primaryLight,
               ),
               label: 'Watchlist',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.pie_chart_outline_rounded),
+              selectedIcon: Icon(
+                Icons.pie_chart_rounded,
+                color: AppTheme.primaryLight,
+              ),
+              label: 'Holdings',
             ),
             NavigationDestination(
               icon: Icon(Icons.candlestick_chart_outlined),

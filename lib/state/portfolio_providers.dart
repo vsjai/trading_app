@@ -3,6 +3,7 @@ import '../core/constants/app_constants.dart';
 import '../models/holding.dart';
 import '../models/order.dart';
 import '../services/storage_service.dart';
+import 'market_providers.dart';
 import 'storage_providers.dart';
 
 class WalletNotifier extends StateNotifier<int> {
@@ -203,4 +204,119 @@ class TradingService {
 
 final tradingServiceProvider = Provider<TradingService>((ref) {
   return TradingService(ref);
+});
+
+enum HoldingsSortCriteria { pnl, symbol, currentValue }
+
+final holdingsSortCriteriaProvider = StateProvider<HoldingsSortCriteria>((ref) {
+  return HoldingsSortCriteria.pnl;
+});
+
+final holdingsSortAscendingProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
+class PortfolioSummary {
+  final int totalInvestedPaise;
+  final int totalCurrentValuePaise;
+  final int totalPnlPaise;
+  final double totalPnlPercent;
+  final int holdingsCount;
+  final int walletBalancePaise;
+
+  const PortfolioSummary({
+    required this.totalInvestedPaise,
+    required this.totalCurrentValuePaise,
+    required this.totalPnlPaise,
+    required this.totalPnlPercent,
+    required this.holdingsCount,
+    required this.walletBalancePaise,
+  });
+
+  static const PortfolioSummary empty = PortfolioSummary(
+    totalInvestedPaise: 0,
+    totalCurrentValuePaise: 0,
+    totalPnlPaise: 0,
+    totalPnlPercent: 0.0,
+    holdingsCount: 0,
+    walletBalancePaise: 0,
+  );
+}
+
+final portfolioSummaryProvider = Provider<PortfolioSummary>((ref) {
+  final holdings = ref.watch(holdingsProvider);
+  final wallet = ref.watch(walletProvider);
+  final feed = ref.watch(marketFeedServiceProvider);
+  ref.watch(marketTickStreamProvider);
+
+  if (holdings.isEmpty) {
+    return PortfolioSummary(
+      totalInvestedPaise: 0,
+      totalCurrentValuePaise: 0,
+      totalPnlPaise: 0,
+      totalPnlPercent: 0.0,
+      holdingsCount: 0,
+      walletBalancePaise: wallet,
+    );
+  }
+
+  int totalInvested = 0;
+  int totalCurrent = 0;
+
+  for (final h in holdings) {
+    totalInvested += h.totalCostPaise;
+    final latestQuote = feed.getLatestQuote(h.symbol);
+    final ltp = latestQuote?.ltpPaise ?? h.avgCostPaise;
+    totalCurrent += h.currentValuePaise(ltp);
+  }
+
+  final totalPnl = totalCurrent - totalInvested;
+  final totalPnlPercent = totalInvested > 0
+      ? (totalPnl / totalInvested) * 100.0
+      : 0.0;
+
+  return PortfolioSummary(
+    totalInvestedPaise: totalInvested,
+    totalCurrentValuePaise: totalCurrent,
+    totalPnlPaise: totalPnl,
+    totalPnlPercent: totalPnlPercent,
+    holdingsCount: holdings.length,
+    walletBalancePaise: wallet,
+  );
+});
+
+final sortedHoldingsProvider = Provider<List<Holding>>((ref) {
+  final holdings = ref.watch(holdingsProvider);
+  final criteria = ref.watch(holdingsSortCriteriaProvider);
+  final ascending = ref.watch(holdingsSortAscendingProvider);
+  final feed = ref.watch(marketFeedServiceProvider);
+  ref.watch(marketTickStreamProvider);
+
+  if (holdings.length <= 1) return holdings;
+
+  final list = List<Holding>.from(holdings);
+
+  list.sort((a, b) {
+    final ltpA = feed.getLatestQuote(a.symbol)?.ltpPaise ?? a.avgCostPaise;
+    final ltpB = feed.getLatestQuote(b.symbol)?.ltpPaise ?? b.avgCostPaise;
+
+    int comparison = 0;
+    switch (criteria) {
+      case HoldingsSortCriteria.pnl:
+        comparison = a.pnlPaise(ltpA).compareTo(b.pnlPaise(ltpB));
+        break;
+      case HoldingsSortCriteria.symbol:
+        comparison = a.symbol.compareTo(b.symbol);
+        break;
+      case HoldingsSortCriteria.currentValue:
+        comparison = a
+            .currentValuePaise(ltpA)
+            .compareTo(b.currentValuePaise(ltpB));
+        break;
+    }
+
+    return ascending ? comparison : -comparison;
+  });
+
+  return list;
 });
