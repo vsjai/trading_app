@@ -179,38 +179,3 @@ dart format --output=none --set-exit-if-changed lib test
 1. **Market Orders Only**: Orders execute immediately at the latest sampled LTP upon submission. Limit orders, stop-losses, and order-book depth are not part of this simulation.
 2. **Local Persistence**: App state is persisted locally using `shared_preferences` without cloud synchronization.
 3. **Simulated Starting Balance**: The app initializes with a default paper wallet balance of ₹5,00,000.00.
-
----
-
-## Walkthrough Video Recording Checklist
-
-When preparing the Loom or screen recording submission, cover the following steps:
-
-1. **Watchlists**:
-   - [ ] Show the default watchlists ("Nifty 50" and "Tech Giants").
-   - [ ] Create a new custom watchlist and rename it.
-   - [ ] Open the Stock Picker and add a stock.
-   - [ ] Drag to reorder stocks in the list.
-   - [ ] Delete a stock from the watchlist.
-2. **Live Prices**:
-   - [ ] Navigate to the "Live Market" tab (Index 0).
-   - [ ] Observe live price movements and green/red flash badges.
-   - [ ] Tap the tick rate badge and switch to **Stress Mode (55/s)**.
-   - [ ] Scroll through all 10 stocks demonstrating smooth scrolling without frame drops.
-3. **Buy/Sell Ticket**:
-   - [ ] Tap a stock in Watchlist or Market to open the Buy/Sell ticket with that stock pre-filled.
-   - [ ] Enter a quantity and demonstrate live projected order value updates as LTP changes.
-   - [ ] Try entering an invalid quantity (0 or negative) and excessive quantity to show inline margin errors.
-   - [ ] Execute a valid BUY order and show the Order Confirmation dialog.
-4. **Holdings & Portfolio**:
-   - [ ] Navigate to the "Holdings" tab (Index 2) to see the newly bought position.
-   - [ ] Point out the aggregate summary card (Invested, Current Value, Total P&L).
-   - [ ] Switch sorting criteria (P&L, Symbol, Current Value).
-   - [ ] Tap the holding to open the Sell ticket and execute a partial sell, then a full liquidation.
-5. **Settings & Theme**:
-   - [ ] Navigate to the "Settings" tab (Index 3).
-   - [ ] Toggle between Dark Mode and Light Mode, showing instant app-wide theme transformation.
-   - [ ] Inspect feed speed selection and paper trading cash reset.
-6. **App Restart Persistence**:
-   - [ ] Fully terminate/restart the app.
-   - [ ] Show that custom watchlists, modified stock order, updated wallet balance, chosen theme mode, and order history are completely restored.
