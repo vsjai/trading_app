@@ -145,6 +145,12 @@ class MarketFeedService {
     return newQuote;
   }
 
+  StockQuote emitCustomQuote(StockQuote quote) {
+    _latestQuotes[quote.symbol] = quote;
+    _tickStreamController.add(quote);
+    return quote;
+  }
+
   void dispose() {
     _timer?.cancel();
     _timer = null;
