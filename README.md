@@ -6,6 +6,22 @@ Zero backend setup or API keys required — runs completely standalone out of th
 
 ---
 
+## Demo & Downloads
+
+### Demo Video
+Watch the silent walkthrough demonstrating live market prices, watchlists, simulated Buy/Sell orders, and portfolio holdings.
+
+[▶ Watch the Demo Video](https://drive.google.com/file/d/1TAUnOr5E__i3R9mIDnzs3s2h2OEHukmV/view?usp=share_link)
+
+### Android Demo APK
+Download the Android APK to install and test the demo application on an Android device.
+
+[⬇ Download Trading App APK](https://drive.google.com/file/d/1JhBgtDkNgR0WD-riWaqhw0MN5a8bU4zZ/view?usp=share_link)
+
+> **Note:** This is a demo trading application with simulated market data. No real trades are executed.
+
+---
+
 ## Features
 
 ### 1. Multi-Watchlist Management
