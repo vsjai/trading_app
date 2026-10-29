@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/watchlist.dart';
+import '../../state/theme_provider.dart';
 import '../../state/watchlist_providers.dart';
 import 'stock_picker_sheet.dart';
 import 'watchlist_stock_row.dart';
@@ -200,6 +201,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(themeModeProvider);
     final watchlists = ref.watch(watchlistsProvider);
     final activeId = ref.watch(activeWatchlistIdProvider);
 
@@ -294,38 +296,45 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
           Container(
             height: 48,
             decoration: BoxDecoration(
-              color: AppTheme.surface,
+              color: AppTheme.surfaceCard.withValues(alpha: 0.3),
               border: Border(
                 bottom: BorderSide(
-                  color: AppTheme.border.withValues(alpha: 0.6),
+                  color: AppTheme.border.withValues(alpha: 0.4),
                   width: 1,
                 ),
               ),
             ),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
               itemCount: watchlists.length + 1,
               itemBuilder: (context, index) {
                 if (index == watchlists.length) {
                   return InkWell(
                     onTap: _showCreateWatchlistDialog,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(20),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: AppTheme.border.withValues(alpha: 0.7),
+                          width: 1,
+                        ),
+                      ),
                       alignment: Alignment.center,
                       child: Row(
                         children: [
                           Icon(
                             Icons.add,
-                            size: 16,
-                            color: AppTheme.textTertiary,
+                            size: 15,
+                            color: AppTheme.textSecondary,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
                             'New',
                             style: TextStyle(
-                              color: AppTheme.textTertiary,
+                              color: AppTheme.textSecondary,
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                             ),
@@ -346,7 +355,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
                       ref.read(activeWatchlistIdProvider.notifier).state =
                           watchlist.id;
                     },
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(20),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 14,
@@ -354,13 +363,13 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppTheme.primary.withValues(alpha: 0.18)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
+                            ? AppTheme.primary.withValues(alpha: 0.2)
+                            : AppTheme.surfaceCard.withValues(alpha: 0.6),
+                        borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: isSelected
-                              ? AppTheme.primaryLight
-                              : Colors.transparent,
+                              ? AppTheme.primary.withValues(alpha: 0.8)
+                              : AppTheme.border.withValues(alpha: 0.5),
                           width: 1,
                         ),
                       ),
@@ -369,7 +378,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
                         watchlist.name,
                         style: TextStyle(
                           color: isSelected
-                              ? AppTheme.textPrimary
+                              ? AppTheme.primaryLight
                               : AppTheme.textSecondary,
                           fontWeight: isSelected
                               ? FontWeight.w700

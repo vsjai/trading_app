@@ -147,9 +147,9 @@ dart format --output=none --set-exit-if-changed lib test
 ```
 
 ### Verified Test Results
-- **95 of 95 tests passing (100% pass rate)**:
+- **97 of 97 tests passing (100% pass rate)**:
   - `test/unit/` (48 tests): Domain serialization, currency formatting without drift, weighted average cost, storage adapters, watchlist reordering, market feed distribution, theme mode persistence.
-  - `test/widget/` (31 tests): Market overview rendering, price flashes, watchlist tabs, stock picker modal, buy/sell ticket validations, order confirmation receipts, portfolio summary card, smooth scrolling, settings screen controls (theme toggle, tick modes, balance reset).
+  - `test/widget/` (33 tests): Market overview rendering, price flashes, watchlist tabs, stock picker modal, buy/sell ticket validations, order confirmation receipts, portfolio summary card, smooth scrolling, settings screen controls (theme toggle, tick modes, balance reset), bottom navigation bar theme reactivity.
   - `test/integration/` (16 tests): Cold restart restoration, cross-watchlist price parity, live price continuity across tab navigation, margin validation, 55+ ticks/sec stress benchmark, and granular stream rebuild isolation.
 - **Static Analysis**: 0 warnings, 0 errors (`flutter analyze`).
 - **Code Cleanliness**: 0 comments in `lib/` in adherence to user directives.

@@ -75,7 +75,9 @@ class _PriceFlashBadgeState extends State<PriceFlashBadge>
               Text(
                 CurrencyFormatter.formatPaise(widget.quote.ltpPaise),
                 style: TextStyle(
-                  color: _textColorAnimation.value ?? AppTheme.textPrimary,
+                  color: _controller.isAnimating
+                      ? (_textColorAnimation.value ?? AppTheme.textPrimary)
+                      : AppTheme.textPrimary,
                   fontWeight: FontWeight.w700,
                   fontSize: 15,
                   letterSpacing: -0.3,

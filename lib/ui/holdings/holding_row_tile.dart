@@ -38,7 +38,7 @@ class HoldingRowTile extends ConsumerWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: AppTheme.border.withValues(alpha: 0.5),
+                color: AppTheme.border.withValues(alpha: 0.4),
                 width: 1,
               ),
             ),
@@ -71,10 +71,6 @@ class HoldingRowTile extends ConsumerWidget {
                         decoration: BoxDecoration(
                           color: AppTheme.surfaceCard,
                           borderRadius: BorderRadius.circular(4),
-                          border: Border.all(
-                            color: AppTheme.border,
-                            width: 0.8,
-                          ),
                         ),
                         child: Text(
                           '${holding.quantity} shares',
@@ -236,7 +232,9 @@ class _HoldingLiveLtpTextState extends State<HoldingLiveLtpText>
         return Text(
           CurrencyFormatter.formatPaise(widget.ltpPaise),
           style: TextStyle(
-            color: _colorAnimation.value ?? AppTheme.textPrimary,
+            color: _controller.isAnimating
+                ? (_colorAnimation.value ?? AppTheme.textPrimary)
+                : AppTheme.textPrimary,
             fontWeight: FontWeight.w600,
             fontSize: 12,
             fontFeatures: const [FontFeature.tabularFigures()],

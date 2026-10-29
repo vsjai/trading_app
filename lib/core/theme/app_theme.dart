@@ -5,11 +5,11 @@ class AppTheme {
 
   static bool isDark = true;
 
-  static const Color darkBackground = Color(0xFF0B0E14);
-  static const Color darkSurface = Color(0xFF141824);
-  static const Color darkSurfaceCard = Color(0xFF1B2030);
-  static const Color darkBorder = Color(0xFF262D3D);
-  static const Color darkTextPrimary = Color(0xFFF8FAFC);
+  static const Color darkBackground = Color(0xFF0D0F14);
+  static const Color darkSurface = Color(0xFF151820);
+  static const Color darkSurfaceCard = Color(0xFF1E222D);
+  static const Color darkBorder = Color(0xFF282D3B);
+  static const Color darkTextPrimary = Color(0xFFFFFFFF);
   static const Color darkTextSecondary = Color(0xFF94A3B8);
   static const Color darkTextTertiary = Color(0xFF64748B);
 
@@ -31,7 +31,7 @@ class AppTheme {
   static Color get textTertiary =>
       isDark ? darkTextTertiary : lightTextTertiary;
 
-  static const Color primary = Color(0xFF3B82F6);
+  static const Color primary = Color(0xFF2563EB);
   static const Color primaryLight = Color(0xFF60A5FA);
 
   static const Color bullGreen = Color(0xFF10B981);
@@ -73,6 +73,32 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           side: const BorderSide(color: darkBorder, width: 1),
         ),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: darkSurface,
+        indicatorColor: primary.withValues(alpha: 0.22),
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: primaryLight,
+            );
+          }
+          return const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: darkTextSecondary,
+          );
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: primaryLight, size: 22);
+          }
+          return const IconThemeData(color: darkTextSecondary, size: 22);
+        }),
       ),
       dividerTheme: const DividerThemeData(
         color: darkBorder,
@@ -130,6 +156,32 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           side: const BorderSide(color: lightBorder, width: 1),
         ),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: lightSurface,
+        indicatorColor: primary.withValues(alpha: 0.12),
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: primary,
+            );
+          }
+          return const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: lightTextSecondary,
+          );
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: primary, size: 22);
+          }
+          return const IconThemeData(color: lightTextSecondary, size: 22);
+        }),
       ),
       dividerTheme: const DividerThemeData(
         color: lightBorder,

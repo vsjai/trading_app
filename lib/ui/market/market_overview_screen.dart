@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_theme.dart';
 import '../../services/market_feed_service.dart';
 import '../../state/market_providers.dart';
+import '../../state/theme_provider.dart';
 import '../trade/buy_sell_ticket_sheet.dart';
 import 'live_stock_tile.dart';
 import 'tick_rate_control_sheet.dart';
@@ -12,6 +13,7 @@ class MarketOverviewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(themeModeProvider);
     final stocks = ref.watch(allStocksProvider);
     final tickMode = ref.watch(tickRateModeProvider);
 
@@ -81,10 +83,10 @@ class MarketOverviewScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
-              color: AppTheme.surface,
+              color: AppTheme.surfaceCard.withValues(alpha: 0.4),
               border: Border(
                 bottom: BorderSide(
-                  color: AppTheme.border.withValues(alpha: 0.6),
+                  color: AppTheme.border.withValues(alpha: 0.5),
                   width: 1,
                 ),
               ),

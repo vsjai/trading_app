@@ -32,10 +32,9 @@ class WatchlistStockRow extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: AppTheme.background,
             border: Border(
               bottom: BorderSide(
-                color: AppTheme.border.withValues(alpha: 0.5),
+                color: AppTheme.border.withValues(alpha: 0.4),
                 width: 1,
               ),
             ),
@@ -45,10 +44,10 @@ class WatchlistStockRow extends ConsumerWidget {
               ReorderableDragStartListener(
                 index: index,
                 child: Padding(
-                  padding: EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.only(right: 12),
                   child: Icon(
                     Icons.drag_indicator,
-                    color: AppTheme.textTertiary,
+                    color: AppTheme.textTertiary.withValues(alpha: 0.8),
                     size: 20,
                   ),
                 ),
@@ -78,17 +77,14 @@ class WatchlistStockRow extends ConsumerWidget {
                           decoration: BoxDecoration(
                             color: AppTheme.surfaceCard,
                             borderRadius: BorderRadius.circular(4),
-                            border: Border.all(
-                              color: AppTheme.border,
-                              width: 0.7,
-                            ),
                           ),
                           child: Text(
                             'NSE',
                             style: TextStyle(
-                              color: AppTheme.textTertiary,
-                              fontSize: 9,
-                              fontWeight: FontWeight.w700,
+                              color: AppTheme.textSecondary,
+                              fontSize: 9.5,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.3,
                             ),
                           ),
                         ),

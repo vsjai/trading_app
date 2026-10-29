@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_theme.dart';
 import '../../state/portfolio_providers.dart';
+import '../../state/theme_provider.dart';
 import 'holding_row_tile.dart';
 import 'portfolio_summary_card.dart';
 
@@ -12,6 +13,7 @@ class HoldingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(themeModeProvider);
     final sortedHoldings = ref.watch(sortedHoldingsProvider);
     final criteria = ref.watch(holdingsSortCriteriaProvider);
     final isAscending = ref.watch(holdingsSortAscendingProvider);
@@ -26,14 +28,14 @@ class HoldingsScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: AppTheme.surface,
+                color: AppTheme.surfaceCard.withValues(alpha: 0.35),
                 border: Border(
                   top: BorderSide(
-                    color: AppTheme.border.withValues(alpha: 0.6),
+                    color: AppTheme.border.withValues(alpha: 0.4),
                     width: 1,
                   ),
                   bottom: BorderSide(
-                    color: AppTheme.border.withValues(alpha: 0.6),
+                    color: AppTheme.border.withValues(alpha: 0.4),
                     width: 1,
                   ),
                 ),

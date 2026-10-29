@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/formatters/currency_formatter.dart';
 import '../../core/theme/app_theme.dart';
 import '../../state/portfolio_providers.dart';
+import '../../state/theme_provider.dart';
 
 class PortfolioSummaryCard extends ConsumerWidget {
   const PortfolioSummaryCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(themeModeProvider);
     final summary = ref.watch(portfolioSummaryProvider);
     final isProfit = summary.totalPnlPaise >= 0;
     final pnlColor = isProfit ? AppTheme.bullGreen : AppTheme.bearRed;

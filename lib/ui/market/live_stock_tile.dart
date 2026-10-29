@@ -58,17 +58,14 @@ class LiveStockTile extends ConsumerWidget {
                           decoration: BoxDecoration(
                             color: AppTheme.surfaceCard,
                             borderRadius: BorderRadius.circular(4),
-                            border: Border.all(
-                              color: AppTheme.border,
-                              width: 0.7,
-                            ),
                           ),
                           child: Text(
                             'NSE',
                             style: TextStyle(
-                              color: AppTheme.textTertiary,
-                              fontSize: 9,
-                              fontWeight: FontWeight.w700,
+                              color: AppTheme.textSecondary,
+                              fontSize: 9.5,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.3,
                             ),
                           ),
                         ),
