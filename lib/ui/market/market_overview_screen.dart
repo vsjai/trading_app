@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_theme.dart';
 import '../../services/market_feed_service.dart';
 import '../../state/market_providers.dart';
+import '../trade/buy_sell_ticket_sheet.dart';
 import 'live_stock_tile.dart';
 import 'tick_rate_control_sheet.dart';
 
@@ -135,7 +136,8 @@ class MarketOverviewScreen extends ConsumerWidget {
                 return LiveStockTile(
                   key: ValueKey('stock_tile_${stock.symbol}'),
                   stock: stock,
-                  onTap: () {},
+                  onTap: () =>
+                      BuySellTicketSheet.show(context, symbol: stock.symbol),
                 );
               },
             ),

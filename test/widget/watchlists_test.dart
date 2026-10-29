@@ -96,7 +96,7 @@ void main() {
   });
 
   testWidgets(
-    'Tapping a stock row opens TradeTicketStub with pre-selected symbol',
+    'Tapping a stock row opens BuySellTicketSheet with pre-selected symbol',
     (WidgetTester tester) async {
       await tester.pumpWidget(createSubject());
       await tester.pumpAndSettle();
@@ -106,7 +106,7 @@ void main() {
 
       expect(find.text('BUY'), findsOneWidget);
       expect(find.text('SELL'), findsOneWidget);
-      expect(find.textContaining('Phase 4'), findsOneWidget);
+      expect(find.text('Projected Order Value'), findsOneWidget);
     },
   );
 

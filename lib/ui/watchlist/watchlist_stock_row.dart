@@ -4,7 +4,7 @@ import '../../core/theme/app_theme.dart';
 import '../../models/stock_quote.dart';
 import '../../state/market_providers.dart';
 import '../common/price_flash_badge.dart';
-import '../trade/trade_ticket_stub.dart';
+import '../trade/buy_sell_ticket_sheet.dart';
 
 class WatchlistStockRow extends ConsumerWidget {
   final String watchlistId;
@@ -28,7 +28,7 @@ class WatchlistStockRow extends ConsumerWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => TradeTicketStub.show(context, symbol),
+        onTap: () => BuySellTicketSheet.show(context, symbol: symbol),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
