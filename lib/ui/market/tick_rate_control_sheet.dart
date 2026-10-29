@@ -45,7 +45,7 @@ class TickRateControlSheet extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
+                Row(
                   children: [
                     Icon(
                       Icons.speed_rounded,
@@ -65,7 +65,7 @@ class TickRateControlSheet extends ConsumerWidget {
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.close,
                     color: AppTheme.textSecondary,
                     size: 20,
@@ -74,7 +74,7 @@ class TickRateControlSheet extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 6),
-            const Text(
+            Text(
               'Control the live tick rate to evaluate performance, high-throughput reactivity, and UI frame stability under stress.',
               style: TextStyle(
                 color: AppTheme.textSecondary,
@@ -138,7 +138,7 @@ class TickRateControlSheet extends ConsumerWidget {
                   Expanded(
                     child: Text(
                       'Feed Status: ${feedService.isRunning ? "Emitting live ticks across 10 stocks" : "Paused"}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppTheme.textSecondary,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -231,7 +231,7 @@ class TickRateControlSheet extends ConsumerWidget {
                   const SizedBox(height: 3),
                   Text(
                     subtitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.textTertiary,
                       fontSize: 11,
                     ),

@@ -49,6 +49,12 @@ Zero backend setup or API keys required — runs completely standalone out of th
 - **Empty State**: Displays an informative empty state with a direct "Explore Market" call to action when no positions are held.
 - **Cold Restart Persistence**: Preserves portfolio holdings across app restarts.
 
+### 5. Settings, Appearance & Paper Account Controls
+- **Light & Dark Theme Engine**: Instant, app-wide switching between sleek Dark Mode and clean, contrast-optimized Light Mode, persisted locally.
+- **Feed Simulation Controls**: Direct toggle between Normal (~2 ticks/s), Active (~10 ticks/s), and Stress (~55+ ticks/s) tick frequencies.
+- **Paper Trading Balance Reset**: One-tap reset back to the default ₹5,00,000.00 cash balance.
+- **Diagnostics & App Stats**: Displays live metrics for active watchlists, open positions count, orders executed, and canonical stock count.
+
 ---
 
 ## Tech Stack & Architecture
@@ -60,15 +66,16 @@ Zero backend setup or API keys required — runs completely standalone out of th
 - **Clean Architecture Layers**:
   ```
   lib/
-  ├── core/               # Theme, constants, formatters (CurrencyFormatter)
+  ├── core/               # Theme (Dark/Light palettes), constants, formatters (CurrencyFormatter)
   ├── models/             # Immutable data models (Stock, StockQuote, Holding, StockOrder, Watchlist)
   ├── services/           # MarketFeedService (single source of truth), StorageService abstractions
-  ├── state/              # Riverpod StateNotifiers & StreamProviders
+  ├── state/              # Riverpod StateNotifiers, StreamProviders & ThemeModeProvider
   ├── ui/                 # Screens & leaf widgets
   │   ├── common/         # PriceFlashBadge, shared UI components
   │   ├── holdings/       # HoldingsScreen, PortfolioSummaryCard, HoldingRowTile
   │   ├── market/         # MarketOverviewScreen, LiveStockTile, TickRateControlSheet
-  │   ├── navigation/     # MainNavigationScaffold
+  │   ├── navigation/     # MainNavigationScaffold (Market, Watchlist, Holdings, Settings)
+  │   ├── settings/       # SettingsScreen (Theme toggle, tick speed, balance reset)
   │   ├── trade/          # BuySellTicketSheet, OrderConfirmationDialog
   │   └── watchlist/      # WatchlistsScreen, WatchlistStockRow, StockPickerSheet
   └── main.dart           # App bootstrap with storage initialization
@@ -140,9 +147,9 @@ dart format --output=none --set-exit-if-changed lib test
 ```
 
 ### Verified Test Results
-- **86 of 86 tests passing (100% pass rate)**:
-  - `test/unit/` (44 tests): Domain serialization, currency formatting without drift, weighted average cost, storage adapters, watchlist reordering, market feed distribution.
-  - `test/widget/` (26 tests): Market overview rendering, price flashes, watchlist tabs, stock picker modal, buy/sell ticket validations, order confirmation receipts, portfolio summary card, smooth scrolling.
+- **95 of 95 tests passing (100% pass rate)**:
+  - `test/unit/` (48 tests): Domain serialization, currency formatting without drift, weighted average cost, storage adapters, watchlist reordering, market feed distribution, theme mode persistence.
+  - `test/widget/` (31 tests): Market overview rendering, price flashes, watchlist tabs, stock picker modal, buy/sell ticket validations, order confirmation receipts, portfolio summary card, smooth scrolling, settings screen controls (theme toggle, tick modes, balance reset).
   - `test/integration/` (16 tests): Cold restart restoration, cross-watchlist price parity, live price continuity across tab navigation, margin validation, 55+ ticks/sec stress benchmark, and granular stream rebuild isolation.
 - **Static Analysis**: 0 warnings, 0 errors (`flutter analyze`).
 - **Code Cleanliness**: 0 comments in `lib/` in adherence to user directives.
@@ -168,7 +175,7 @@ When preparing the Loom or screen recording submission, cover the following step
    - [ ] Drag to reorder stocks in the list.
    - [ ] Delete a stock from the watchlist.
 2. **Live Prices**:
-   - [ ] Navigate to the "Live Market" tab.
+   - [ ] Navigate to the "Live Market" tab (Index 0).
    - [ ] Observe live price movements and green/red flash badges.
    - [ ] Tap the tick rate badge and switch to **Stress Mode (55/s)**.
    - [ ] Scroll through all 10 stocks demonstrating smooth scrolling without frame drops.
@@ -178,10 +185,14 @@ When preparing the Loom or screen recording submission, cover the following step
    - [ ] Try entering an invalid quantity (0 or negative) and excessive quantity to show inline margin errors.
    - [ ] Execute a valid BUY order and show the Order Confirmation dialog.
 4. **Holdings & Portfolio**:
-   - [ ] Navigate to the "Holdings" tab to see the newly bought position.
+   - [ ] Navigate to the "Holdings" tab (Index 2) to see the newly bought position.
    - [ ] Point out the aggregate summary card (Invested, Current Value, Total P&L).
    - [ ] Switch sorting criteria (P&L, Symbol, Current Value).
    - [ ] Tap the holding to open the Sell ticket and execute a partial sell, then a full liquidation.
-5. **App Restart Persistence**:
+5. **Settings & Theme**:
+   - [ ] Navigate to the "Settings" tab (Index 3).
+   - [ ] Toggle between Dark Mode and Light Mode, showing instant app-wide theme transformation.
+   - [ ] Inspect feed speed selection and paper trading cash reset.
+6. **App Restart Persistence**:
    - [ ] Fully terminate/restart the app.
-   - [ ] Show that custom watchlists, modified stock order, updated wallet balance, and order history are completely restored.
+   - [ ] Show that custom watchlists, modified stock order, updated wallet balance, chosen theme mode, and order history are completely restored.

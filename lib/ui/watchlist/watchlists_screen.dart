@@ -23,9 +23,9 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
           backgroundColor: AppTheme.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
-            side: const BorderSide(color: AppTheme.border),
+            side: BorderSide(color: AppTheme.border),
           ),
-          title: const Text(
+          title: Text(
             'New Watchlist',
             style: TextStyle(
               color: AppTheme.textPrimary,
@@ -35,26 +35,26 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
           content: TextField(
             controller: controller,
             autofocus: true,
-            style: const TextStyle(color: AppTheme.textPrimary),
+            style: TextStyle(color: AppTheme.textPrimary),
             decoration: InputDecoration(
               hintText: 'e.g. Bluechip Leaders',
-              hintStyle: const TextStyle(color: AppTheme.textTertiary),
+              hintStyle: TextStyle(color: AppTheme.textTertiary),
               filled: true,
               fillColor: AppTheme.surfaceCard,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: AppTheme.border),
+                borderSide: BorderSide(color: AppTheme.border),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: AppTheme.border),
+                borderSide: BorderSide(color: AppTheme.border),
               ),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 'Cancel',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
@@ -93,9 +93,9 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
           backgroundColor: AppTheme.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
-            side: const BorderSide(color: AppTheme.border),
+            side: BorderSide(color: AppTheme.border),
           ),
-          title: const Text(
+          title: Text(
             'Rename Watchlist',
             style: TextStyle(
               color: AppTheme.textPrimary,
@@ -105,20 +105,20 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
           content: TextField(
             controller: controller,
             autofocus: true,
-            style: const TextStyle(color: AppTheme.textPrimary),
+            style: TextStyle(color: AppTheme.textPrimary),
             decoration: InputDecoration(
               filled: true,
               fillColor: AppTheme.surfaceCard,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: AppTheme.border),
+                borderSide: BorderSide(color: AppTheme.border),
               ),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 'Cancel',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
@@ -153,9 +153,9 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
           backgroundColor: AppTheme.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
-            side: const BorderSide(color: AppTheme.border),
+            side: BorderSide(color: AppTheme.border),
           ),
-          title: const Text(
+          title: Text(
             'Delete Watchlist',
             style: TextStyle(
               color: AppTheme.textPrimary,
@@ -164,12 +164,12 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
           ),
           content: Text(
             'Are you sure you want to delete "${watchlist.name}"? This action cannot be undone.',
-            style: const TextStyle(color: AppTheme.textSecondary),
+            style: TextStyle(color: AppTheme.textSecondary),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 'Cancel',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
@@ -216,12 +216,12 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
         title: const Text('Watchlists'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add, color: AppTheme.textPrimary),
+            icon: Icon(Icons.add, color: AppTheme.textPrimary),
             tooltip: 'Create New Watchlist',
             onPressed: _showCreateWatchlistDialog,
           ),
           PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, color: AppTheme.textPrimary),
+            icon: Icon(Icons.more_vert, color: AppTheme.textPrimary),
             color: AppTheme.surfaceCard,
             onSelected: (value) {
               if (value == 'rename') {
@@ -233,7 +233,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'add_stock',
                 child: Row(
                   children: [
@@ -250,7 +250,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
                   ],
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'rename',
                 child: Row(
                   children: [
@@ -314,7 +314,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       alignment: Alignment.center,
-                      child: const Row(
+                      child: Row(
                         children: [
                           Icon(
                             Icons.add,
@@ -399,7 +399,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
               children: [
                 Text(
                   '${activeWatchlist.symbols.length} Instruments • Drag handle to reorder',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppTheme.textTertiary,
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
@@ -446,7 +446,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
                           const SizedBox(height: 16),
                           Text(
                             'Watchlist is Empty',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppTheme.textPrimary,
                               fontWeight: FontWeight.w700,
                               fontSize: 17,
@@ -456,7 +456,7 @@ class _WatchlistsScreenState extends ConsumerState<WatchlistsScreen> {
                           Text(
                             'Add instruments from the 10 available stocks to track live prices and execute trades.',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppTheme.textSecondary,
                               fontSize: 13,
                               height: 1.4,

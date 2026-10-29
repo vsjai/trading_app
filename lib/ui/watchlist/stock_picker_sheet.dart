@@ -80,7 +80,7 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Add Instruments',
                         style: TextStyle(
                           color: AppTheme.textPrimary,
@@ -91,7 +91,7 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
                       const SizedBox(height: 2),
                       Text(
                         'To "${currentWatchlist.name}" (${existingSymbols.length}/10 added)',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textSecondary,
                           fontSize: 12,
                         ),
@@ -100,10 +100,7 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
                   ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(
-                      Icons.close,
-                      color: AppTheme.textSecondary,
-                    ),
+                    icon: Icon(Icons.close, color: AppTheme.textSecondary),
                   ),
                 ],
               ),
@@ -111,17 +108,14 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
               TextField(
                 controller: _searchController,
                 onChanged: (val) => setState(() => _query = val.trim()),
-                style: const TextStyle(
-                  color: AppTheme.textPrimary,
-                  fontSize: 14,
-                ),
+                style: TextStyle(color: AppTheme.textPrimary, fontSize: 14),
                 decoration: InputDecoration(
                   hintText: 'Search 10 available stocks...',
-                  hintStyle: const TextStyle(
+                  hintStyle: TextStyle(
                     color: AppTheme.textTertiary,
                     fontSize: 13,
                   ),
-                  prefixIcon: const Icon(
+                  prefixIcon: Icon(
                     Icons.search,
                     color: AppTheme.textTertiary,
                     size: 20,
@@ -134,11 +128,11 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: AppTheme.border),
+                    borderSide: BorderSide(color: AppTheme.border),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: AppTheme.border),
+                    borderSide: BorderSide(color: AppTheme.border),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -155,7 +149,7 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
                   controller: scrollController,
                   itemCount: filtered.length,
                   separatorBuilder: (_, _) =>
-                      const Divider(color: AppTheme.border, height: 1),
+                      Divider(color: AppTheme.border, height: 1),
                   itemBuilder: (context, index) {
                     final stock = filtered[index];
                     final isAdded = existingSymbols.contains(stock.symbol);
@@ -167,7 +161,7 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
                       ),
                       title: Text(
                         stock.symbol,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textPrimary,
                           fontWeight: FontWeight.w700,
                           fontSize: 15,
@@ -175,7 +169,7 @@ class _StockPickerSheetState extends ConsumerState<StockPickerSheet> {
                       ),
                       subtitle: Text(
                         stock.name,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textSecondary,
                           fontSize: 12,
                         ),

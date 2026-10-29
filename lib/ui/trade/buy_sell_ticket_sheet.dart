@@ -146,7 +146,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                         children: [
                           Text(
                             widget.symbol,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppTheme.textPrimary,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -163,7 +163,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(color: AppTheme.border),
                             ),
-                            child: const Text(
+                            child: Text(
                               'NSE',
                               style: TextStyle(
                                 color: AppTheme.textTertiary,
@@ -177,7 +177,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                       const SizedBox(height: 2),
                       Text(
                         stock?.name ?? widget.symbol,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textSecondary,
                           fontSize: 12,
                         ),
@@ -189,7 +189,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                     children: [
                       Text(
                         CurrencyFormatter.formatPaise(currentLtpPaise),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textPrimary,
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -277,7 +277,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Quantity',
                     style: TextStyle(
                       color: AppTheme.textPrimary,
@@ -289,7 +289,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                     isBuy
                         ? 'Margin Avail: ${CurrencyFormatter.formatPaise(walletBalancePaise)}'
                         : 'Holdings: $heldQty shares',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.textSecondary,
                       fontSize: 12,
                       fontFeatures: [FontFeature.tabularFigures()],
@@ -311,7 +311,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppTheme.textPrimary,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -326,11 +326,11 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: AppTheme.border),
+                          borderSide: BorderSide(color: AppTheme.border),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: AppTheme.border),
+                          borderSide: BorderSide(color: AppTheme.border),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -400,7 +400,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Projected Order Value',
                       style: TextStyle(
                         color: AppTheme.textSecondary,
@@ -409,7 +409,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
                     ),
                     Text(
                       CurrencyFormatter.formatPaise(projectedOrderValuePaise),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppTheme.textPrimary,
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
@@ -552,7 +552,7 @@ class _BuySellTicketSheetState extends ConsumerState<BuySellTicketSheet> {
         ),
         child: Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             color: AppTheme.textSecondary,
             fontSize: 11,
             fontWeight: FontWeight.w600,

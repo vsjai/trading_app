@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
 import 'services/storage_service.dart';
 import 'state/storage_providers.dart';
-
+import 'state/theme_provider.dart';
 import 'ui/navigation/main_navigation_scaffold.dart';
 
 Future<void> main() async {
@@ -20,15 +20,19 @@ Future<void> main() async {
   );
 }
 
-class TradingApp extends StatelessWidget {
+class TradingApp extends ConsumerWidget {
   const TradingApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return MaterialApp(
       title: 'Trading App',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeMode,
       home: const MainNavigationScaffold(),
     );
   }

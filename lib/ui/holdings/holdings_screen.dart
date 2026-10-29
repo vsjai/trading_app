@@ -40,7 +40,7 @@ class HoldingsScreen extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  const Text(
+                  Text(
                     'Sort by:',
                     style: TextStyle(
                       color: AppTheme.textTertiary,
@@ -75,7 +75,7 @@ class HoldingsScreen extends ConsumerWidget {
                   const Spacer(),
                   Text(
                     '${sortedHoldings.length} Positions',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.textSecondary,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
@@ -98,7 +98,7 @@ class HoldingsScreen extends ConsumerWidget {
                             color: AppTheme.textTertiary.withValues(alpha: 0.5),
                           ),
                           const SizedBox(height: 16),
-                          const Text(
+                          Text(
                             'No Holdings Yet',
                             style: TextStyle(
                               color: AppTheme.textPrimary,
@@ -107,7 +107,7 @@ class HoldingsScreen extends ConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
+                          Text(
                             'Execute Buy orders from your Watchlists or the Live Market to build and track your active positions.',
                             textAlign: TextAlign.center,
                             style: TextStyle(

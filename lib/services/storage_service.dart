@@ -19,6 +19,9 @@ abstract class StorageService {
   List<StockOrder>? loadOrders();
   Future<void> saveOrders(List<StockOrder> orders);
 
+  String? loadThemeMode();
+  Future<void> saveThemeMode(String mode);
+
   Future<void> clearAll();
 }
 
@@ -27,6 +30,7 @@ class SharedPrefsStorageService implements StorageService {
   static const String _keyWalletBalance = 'trading_app_wallet_balance_v1';
   static const String _keyHoldings = 'trading_app_holdings_v1';
   static const String _keyOrders = 'trading_app_orders_v1';
+  static const String _keyThemeMode = 'trading_app_theme_mode_v1';
 
   final SharedPreferences? _customPrefs;
   SharedPreferences? _prefs;
@@ -118,11 +122,22 @@ class SharedPrefsStorageService implements StorageService {
   }
 
   @override
+  String? loadThemeMode() {
+    return _instance.getString(_keyThemeMode);
+  }
+
+  @override
+  Future<void> saveThemeMode(String mode) async {
+    await _instance.setString(_keyThemeMode, mode);
+  }
+
+  @override
   Future<void> clearAll() async {
     await _instance.remove(_keyWatchlists);
     await _instance.remove(_keyWalletBalance);
     await _instance.remove(_keyHoldings);
     await _instance.remove(_keyOrders);
+    await _instance.remove(_keyThemeMode);
   }
 }
 
@@ -131,6 +146,7 @@ class InMemoryStorageService implements StorageService {
   int? _walletBalance;
   List<Holding>? _holdings;
   List<StockOrder>? _orders;
+  String? _themeMode;
 
   @override
   Future<void> init() async {}
@@ -168,10 +184,19 @@ class InMemoryStorageService implements StorageService {
   }
 
   @override
+  String? loadThemeMode() => _themeMode;
+
+  @override
+  Future<void> saveThemeMode(String mode) async {
+    _themeMode = mode;
+  }
+
+  @override
   Future<void> clearAll() async {
     _watchlists = null;
     _walletBalance = null;
     _holdings = null;
     _orders = null;
+    _themeMode = null;
   }
 }

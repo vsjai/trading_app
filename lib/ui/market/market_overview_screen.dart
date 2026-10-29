@@ -103,7 +103,7 @@ class MarketOverviewScreen extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Text(
+                    Text(
                       'MARKET LIVE',
                       style: TextStyle(
                         color: AppTheme.textSecondary,
@@ -116,7 +116,7 @@ class MarketOverviewScreen extends ConsumerWidget {
                 ),
                 Text(
                   '${stocks.length} Instruments',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppTheme.textTertiary,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,

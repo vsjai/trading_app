@@ -37,7 +37,7 @@ class OrderConfirmationDialog extends StatelessWidget {
       backgroundColor: AppTheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        side: const BorderSide(color: AppTheme.border),
+        side: BorderSide(color: AppTheme.border),
       ),
       contentPadding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
       content: Column(
@@ -53,7 +53,7 @@ class OrderConfirmationDialog extends StatelessWidget {
             child: Icon(Icons.check_circle_rounded, color: sideColor, size: 36),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Order Completed',
             style: TextStyle(
               color: AppTheme.textPrimary,
@@ -64,7 +64,7 @@ class OrderConfirmationDialog extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             order.id,
-            style: const TextStyle(
+            style: TextStyle(
               color: AppTheme.textTertiary,
               fontSize: 11,
               fontFeatures: [FontFeature.tabularFigures()],
@@ -83,7 +83,7 @@ class OrderConfirmationDialog extends StatelessWidget {
                 _buildReceiptRow(
                   label: 'Instrument',
                   value: order.symbol,
-                  valueStyle: const TextStyle(
+                  valueStyle: TextStyle(
                     color: AppTheme.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),
@@ -107,7 +107,7 @@ class OrderConfirmationDialog extends StatelessWidget {
                   label: 'Executed Price',
                   value: CurrencyFormatter.formatPaise(order.pricePaise),
                 ),
-                const Divider(color: AppTheme.border, height: 20),
+                Divider(color: AppTheme.border, height: 20),
                 _buildReceiptRow(
                   label: isBuy ? 'Total Debited' : 'Total Credited',
                   value: CurrencyFormatter.formatPaise(order.totalValuePaise),
@@ -121,7 +121,7 @@ class OrderConfirmationDialog extends StatelessWidget {
                 _buildReceiptRow(
                   label: 'Wallet Balance',
                   value: CurrencyFormatter.formatPaise(remainingBalancePaise),
-                  valueStyle: const TextStyle(
+                  valueStyle: TextStyle(
                     color: AppTheme.textSecondary,
                     fontSize: 12,
                   ),
@@ -163,13 +163,13 @@ class OrderConfirmationDialog extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
+          style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
         ),
         Text(
           value,
           style:
               valueStyle ??
-              const TextStyle(
+              TextStyle(
                 color: AppTheme.textPrimary,
                 fontWeight: FontWeight.w600,
                 fontSize: 13,

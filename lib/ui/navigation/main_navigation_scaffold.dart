@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../holdings/holdings_screen.dart';
 import '../market/market_overview_screen.dart';
+import '../settings/settings_screen.dart';
 import '../watchlist/watchlists_screen.dart';
 
 class MainNavigationScaffold extends StatefulWidget {
@@ -15,9 +16,10 @@ class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
   int _currentIndex = 0;
 
   late final List<Widget> _screens = [
+    const MarketOverviewScreen(),
     const WatchlistsScreen(),
     HoldingsScreen(onExploreTap: () => setState(() => _currentIndex = 0)),
-    const MarketOverviewScreen(),
+    const SettingsScreen(),
   ];
 
   @override
@@ -47,6 +49,14 @@ class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
           },
           destinations: const [
             NavigationDestination(
+              icon: Icon(Icons.candlestick_chart_outlined),
+              selectedIcon: Icon(
+                Icons.candlestick_chart,
+                color: AppTheme.primaryLight,
+              ),
+              label: 'Market',
+            ),
+            NavigationDestination(
               icon: Icon(Icons.bookmark_border_rounded),
               selectedIcon: Icon(
                 Icons.bookmark_rounded,
@@ -63,12 +73,12 @@ class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
               label: 'Holdings',
             ),
             NavigationDestination(
-              icon: Icon(Icons.candlestick_chart_outlined),
+              icon: Icon(Icons.settings_outlined),
               selectedIcon: Icon(
-                Icons.candlestick_chart,
+                Icons.settings_rounded,
                 color: AppTheme.primaryLight,
               ),
-              label: 'Market',
+              label: 'Settings',
             ),
           ],
         ),

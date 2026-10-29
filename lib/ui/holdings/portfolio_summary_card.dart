@@ -27,7 +27,7 @@ class PortfolioSummaryCard extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Total P&L',
                 style: TextStyle(
                   color: AppTheme.textSecondary,
@@ -76,7 +76,7 @@ class PortfolioSummaryCard extends ConsumerWidget {
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
-          const Divider(color: AppTheme.border, height: 24),
+          Divider(color: AppTheme.border, height: 24),
           Row(
             children: [
               Expanded(
@@ -116,12 +116,12 @@ class PortfolioSummaryCard extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(color: AppTheme.textTertiary, fontSize: 11),
+          style: TextStyle(color: AppTheme.textTertiary, fontSize: 11),
         ),
         const SizedBox(height: 3),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             color: AppTheme.textPrimary,
             fontSize: 13,
             fontWeight: FontWeight.w700,

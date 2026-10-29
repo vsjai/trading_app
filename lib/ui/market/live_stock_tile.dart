@@ -42,7 +42,7 @@ class LiveStockTile extends ConsumerWidget {
                       children: [
                         Text(
                           stock.symbol,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppTheme.textPrimary,
                             fontWeight: FontWeight.w700,
                             fontSize: 15,
@@ -63,7 +63,7 @@ class LiveStockTile extends ConsumerWidget {
                               width: 0.7,
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'NSE',
                             style: TextStyle(
                               color: AppTheme.textTertiary,
@@ -77,7 +77,7 @@ class LiveStockTile extends ConsumerWidget {
                     const SizedBox(height: 3),
                     Text(
                       stock.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppTheme.textSecondary,
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -104,7 +104,7 @@ class LiveStockTile extends ConsumerWidget {
                       quote: initialQuote,
                     );
                   }
-                  return const SizedBox(
+                  return SizedBox(
                     width: 70,
                     height: 28,
                     child: Center(

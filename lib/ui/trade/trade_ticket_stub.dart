@@ -52,7 +52,7 @@ class TradeTicketStub extends ConsumerWidget {
                   children: [
                     Text(
                       symbol,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppTheme.textPrimary,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -61,7 +61,7 @@ class TradeTicketStub extends ConsumerWidget {
                     if (stock != null)
                       Text(
                         stock.name,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textSecondary,
                           fontSize: 12,
                         ),
@@ -74,7 +74,7 @@ class TradeTicketStub extends ConsumerWidget {
                     children: [
                       Text(
                         CurrencyFormatter.formatPaise(quote.ltpPaise),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textPrimary,
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -105,7 +105,7 @@ class TradeTicketStub extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppTheme.border),
               ),
-              child: const Row(
+              child: Row(
                 children: [
                   Icon(
                     Icons.info_outline,

@@ -44,7 +44,7 @@ class WatchlistStockRow extends ConsumerWidget {
             children: [
               ReorderableDragStartListener(
                 index: index,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(right: 12),
                   child: Icon(
                     Icons.drag_indicator,
@@ -62,7 +62,7 @@ class WatchlistStockRow extends ConsumerWidget {
                       children: [
                         Text(
                           symbol,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppTheme.textPrimary,
                             fontWeight: FontWeight.w700,
                             fontSize: 15,
@@ -83,7 +83,7 @@ class WatchlistStockRow extends ConsumerWidget {
                               width: 0.7,
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'NSE',
                             style: TextStyle(
                               color: AppTheme.textTertiary,
@@ -97,7 +97,7 @@ class WatchlistStockRow extends ConsumerWidget {
                     const SizedBox(height: 3),
                     Text(
                       stock?.name ?? symbol,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppTheme.textSecondary,
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -124,7 +124,7 @@ class WatchlistStockRow extends ConsumerWidget {
                       quote: initialQuote,
                     );
                   }
-                  return const SizedBox(
+                  return SizedBox(
                     width: 60,
                     height: 24,
                     child: Center(
@@ -150,7 +150,7 @@ class WatchlistStockRow extends ConsumerWidget {
                 ),
               ),
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.delete_outline,
                   color: AppTheme.textTertiary,
                   size: 19,

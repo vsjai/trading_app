@@ -17,6 +17,6 @@ void main() {
       ),
     );
 
-    expect(find.text('Watchlists'), findsOneWidget);
+    expect(find.text('Live Market'), findsOneWidget);
   });
 }
